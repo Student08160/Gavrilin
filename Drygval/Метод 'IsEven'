@@ -1,0 +1,30 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Метод__IsEven_
+{
+    internal class Program
+    {
+        
+        public static void IsEven(int x)
+        {
+            bool flag = false;
+            if (x % 2 == 0)
+            {
+                flag = true;
+            }
+
+            Console.WriteLine(flag);
+        }
+
+        static void Main(string[] args)
+        {
+            Console.Write("Пожалуйста, введите число: ");
+            int num = Convert.ToInt32(Console.ReadLine());
+            IsEven(num);
+        }
+    }
+}
