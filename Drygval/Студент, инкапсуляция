@@ -1,0 +1,69 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Schema;
+
+namespace Инкапсуляция
+{
+    public class Student
+    {
+        public string FirstName;
+        public string LastName;
+        public byte Age;
+        private byte Grade;
+
+        public byte GradeProperties
+        {
+            set
+            {
+                if (value >= 1 && value <= 10)
+                {
+                    Grade = value;
+                }
+                else
+                {
+                    Console.WriteLine($"Ошибка в оценке у студента {FirstName} {LastName}.\n");
+                }
+            }
+
+            get
+            {
+                return Grade;
+            }
+        }
+
+        public Student(string firstname, string lastname, byte age, byte gade)
+        {
+            FirstName = firstname;
+            LastName = lastname;
+            Age = age;
+            GradeProperties = gade;
+        }
+
+        public void PrintInfo()
+        {
+            Console.WriteLine($"First name: {FirstName}\n" +
+                $"Last name: {LastName}\n" +
+                $"Age: {Age}\n" +
+                $"Grade: {GradeProperties}\n\n" +
+                $"-----\n");
+        }
+
+    }
+        class Program
+        {
+            static void Main()
+            {
+                Student Michael = new Student("Michael", "Jackson", 17, 8);
+                Student John = new Student("John", "Wick", 18, 19);
+                Student Hans = new Student("Hans", "Landa", 19, 10);
+
+                Michael.PrintInfo();
+                John.PrintInfo();
+                Hans.PrintInfo();
+            }
+        }
+}
