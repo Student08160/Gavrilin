@@ -1,0 +1,42 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Наследование___Преподаватель_
+{
+    class Person
+    {
+        public string FirstName;
+        public string LastName;
+        public byte Age;
+    }
+
+    class Teacher : Person
+    {
+        public string Subject;
+        public void PrintInfo()
+        {
+            Console.WriteLine($"Информация об учителе:\n-----\n" +
+                $"Имя: {FirstName}\n" +
+                $"Фамилия: {LastName}\n" +
+                $"Возраст: {Age}\n" +
+                $"Предмет: {Subject}");
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Teacher Teacher1 = new Teacher();
+
+            Teacher1.FirstName = "Джо";
+            Teacher1.LastName = "Байден";
+            Teacher1.Age = 34;
+            Teacher1.Subject = "Политология";
+
+            Teacher1.PrintInfo();
+        }
+    }
+}
