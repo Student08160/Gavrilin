@@ -1,0 +1,65 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Cache;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Класс__Студент_
+{
+    // Создание класса 'Student', где находятся данные для заполения и метод, описывающий каждого студента.
+    public class Student
+    {
+        // Создание переменных-данных.
+        public string FirstName;
+        public string LastName;
+        public byte Age;
+        public byte Grade;
+
+        public Student (string firstName, string lastName, byte age, byte grade)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Age = age;
+            Grade = grade;
+        }
+
+        // Создание метода, выводящего информацию о студенте.
+        public void PrintInfo()
+        {
+            Console.WriteLine($"Информация о студенте:\n-----\n" +
+                $"Имя: {FirstName}\n" +
+                $"Фамилия: {LastName}\n" +
+                $"Возраст: {Age}\n" +
+                $"Оценка: {Grade}\n-----");
+        }
+    }
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            // Создание нового объекта.
+            Student Student1 = new Student("Майкл", "Джексон", 19, 5);
+
+            Student1.PrintInfo();
+
+            Student Student2 = new Student("Владимир", "Путин", 18, 4);
+
+            Student2.PrintInfo();
+
+            Student Student3 = new Student("Дональд", "Трамп", 20, 3);
+
+            Student3.PrintInfo();
+
+            Student Student4 = new Student("Сергей", "Лавров", 17, 2);
+
+            Student4.FirstName = "Сергей";
+            Student4.LastName = "Лавров";
+            Student4.Age = 17;
+            Student4.Grade = 2;
+
+            Student4.PrintInfo();
+        }
+    }
+}
