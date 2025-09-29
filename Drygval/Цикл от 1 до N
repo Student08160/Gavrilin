@@ -1,0 +1,36 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Цикл_от_1_до_N
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            // Получаем исходные данные от пользователя.
+
+            Console.Write("Пожалуйста, введите число: ");
+
+            int n = Convert.ToInt32(Console.ReadLine());
+
+            // Производим вычисления.
+
+            int sum = 0;
+
+            for (int i = 0; i < n; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    sum += i;
+                }
+            }
+
+            // Выводим результат.
+
+            Console.WriteLine("Результат: " + sum);
+        }
+    }
+}
