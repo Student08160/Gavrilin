@@ -1,0 +1,30 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Гласные_в_строке
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Пожалуйста, введите строку: ");
+            string user_input = Console.ReadLine();
+            string low_user_input = user_input.ToLower();
+            string symbols = "aeiouyаеёиоуыэюя";
+            int k = 0;
+
+            foreach (char i in low_user_input)
+            {
+                if (symbols.Contains(i))
+                {
+                    k++;
+                }
+            }
+
+            Console.WriteLine($"Количество гласных букв: {k}");
+        }
+    }
+}
