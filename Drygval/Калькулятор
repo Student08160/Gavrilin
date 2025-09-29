@@ -1,0 +1,53 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Калькулятор
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            // Запрос исходных данных от пользователя.
+
+            Console.Write("Пожалуйста, введите первое число: ");
+            double num1 = Convert.ToDouble(Console.ReadLine());
+
+            Console.Write("Пожалуйста, введите второе число: ");
+            double num2 = Convert.ToDouble(Console.ReadLine());
+
+            Console.Write("Пожалуйста, напишите желаемую операцию (+, -, *, /): ");
+            string symbol = Console.ReadLine();
+
+            // Производим вычисления.
+
+            switch (symbol)
+            {
+                case "+":
+                    Console.WriteLine("Результат: " + (num1 + num2) + ".");
+                    break;
+
+                case "-":
+                    Console.WriteLine("Результат: " + (num1 - num2) + ".");
+                    break;
+
+                case "*":
+                    Console.WriteLine("Результат: " + (num1 * num2) + ".");
+                    break;
+
+                case "/":
+                    if (num2 == 0)
+                    {
+                        Console.WriteLine("Операция невозможна.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Результат: " + num1 / num2 + ".");
+                    }
+                    break;
+            }
+        }
+    }
+}
