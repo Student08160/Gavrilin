@@ -1,0 +1,38 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Полиморфизм
+{
+
+    public class Person
+    {
+        public virtual void IntroduceYourself()
+        {
+            Console.WriteLine("Здравствуй, мой дорогой человек!\n");
+        }
+    }
+
+    public class Teacher : Person
+    {
+        public override void IntroduceYourself()
+        {
+            Console.WriteLine("Здравствуй, мой дорогой человек!\n" +
+                "Твой предмет: биология.\n");
+        }
+    }
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Person Michael = new Person();
+            Teacher Teacher = new Teacher();
+
+            Michael.IntroduceYourself();
+            Teacher.IntroduceYourself();
+        }
+    }
+}
