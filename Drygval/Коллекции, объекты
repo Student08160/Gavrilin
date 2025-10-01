@@ -1,0 +1,86 @@
+using System;
+using System.Collections.Generic;
+
+namespace Temp
+{
+    public class Student
+    {
+        public string FirstName;
+        public string LastName;
+        public int Age;
+        private int Grade;
+
+        public int GradeProperties
+        {
+            set
+            {
+                if (value >= 1 && value <= 10)
+                {
+                    Grade = value;
+                }
+            }
+
+            get
+            {
+                return Grade;
+            }
+        }
+
+        public Student(string firstName, string lastName, int age, int grade)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Age = age;
+            GradeProperties = grade;
+        }
+    }
+    internal class Program
+    {
+        public static void PrintHighGrade(List<Student> Array)
+        {
+            int MinGrade = Array[0].GradeProperties;
+            string FirstNameMin = Array[0].FirstName;
+            string LastNameMin = Array[0].LastName;
+
+            int MaxGrade = Array[0].GradeProperties;
+            string FirstNameMax = Array[0].FirstName;
+            string LastNameMax = Array[0].LastName;
+
+            foreach (Student Item in Array)
+            {
+                if (Item.GradeProperties < MinGrade)
+                {
+                    MinGrade = Item.GradeProperties;
+                    FirstNameMin = Item.FirstName;
+                    LastNameMin = Item.LastName;
+                }
+                else if (Item.GradeProperties > MaxGrade)
+                {
+                    MaxGrade = Item.GradeProperties;
+                    FirstNameMax = Item.FirstName;
+                    LastNameMax = Item.LastName;
+                }
+            }
+
+            Console.WriteLine($"Самая низкая оценка: {MinGrade};\n" +
+                $"Имя студента: {FirstNameMin} {LastNameMin}." +
+                $"\n\n" +
+                $"Самая высокая оценка: {MaxGrade};\n" +
+                $"Имя студента: {FirstNameMax} {LastNameMax}.");
+        }
+        static void Main(string[] args)
+        {
+            Random Random = new Random();
+
+            Student Michael = new Student("Michael", "Jackson", Random.Next(15, 22), Random.Next(1, 11));
+            Student Tony = new Student("Tony", "Stark", Random.Next(15, 22), Random.Next(1, 11));
+            Student Peter = new Student("Peter", "Parker", Random.Next(15, 22), Random.Next(1, 11));
+            Student Jack = new Student("Jack", "Sparrow", Random.Next(15, 22), Random.Next(1, 11));
+            Student Elon = new Student("Elon", "Musk", Random.Next(15, 22), Random.Next(1, 11));
+
+            List<Student> Students = new List<Student> { Michael, Tony, Peter, Jack, Elon };
+
+            PrintHighGrade(Students);
+        }
+    }
+}
