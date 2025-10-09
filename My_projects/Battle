@@ -1,0 +1,80 @@
+using System;
+using System.Collections.Generic;
+using System.Threading;
+
+namespace Temp
+{
+    public class Demon
+    {
+        public string Name;
+        public int Armor;
+
+        public Demon(string name)
+        {
+            Name = name;
+        }
+    }
+    internal class Program
+    {
+        static public void RedWins(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(text);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        static public void BlueWins(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine(text);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+        static void Main(string[] args)
+        {
+            Random Random = new Random();
+
+            Demon Radio = new Demon("Alastor");
+            Demon Tv = new Demon("Vox");
+
+            //Console.Write("Please, enter count iterations: ");
+            int AllCount = Random.Next(1, 101);
+
+            int WinRadio = 0;
+            int WinTv = 0;
+
+            //Console.WriteLine();
+
+            for (int i = 1; i <= AllCount; i++)
+            {
+                Radio.Armor = Random.Next(80, 101);
+                Tv.Armor = Random.Next(80, 101);
+                while (Radio.Armor > 0 || Tv.Armor > 0)
+                {
+                    Console.WriteLine($"{Radio.Name}: {Radio.Armor} || {Tv.Name}: {Tv.Armor}");
+                    Radio.Armor -= Random.Next(0, 21);
+                    Tv.Armor -= Random.Next(0, 21);
+                    if (Radio.Armor < 1)
+                    {
+                        Console.Write($"Winner: ");
+                        BlueWins($"{Tv.Name}.");
+                        WinTv += 1;
+                        break;
+                    }
+                    else if (Tv.Armor < 1)
+                    {
+                        Console.Write($"Winner: ");
+                        RedWins($"{Radio.Name}.");
+                        WinRadio += 1;
+                        break;
+                    }
+
+                    Thread.Sleep(1000);
+                }
+                Console.WriteLine($"Цикл {i} закончен.\n");
+                Thread.Sleep(1000);
+            }
+            Console.WriteLine($"Количество побед персонажа {Radio.Name}: {WinRadio}.\n" +
+                $"Количество побед персонажа {Tv.Name}: {WinTv}.\n");
+        }
+    }
+}
