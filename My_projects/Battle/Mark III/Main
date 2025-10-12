@@ -1,0 +1,116 @@
+using System;
+using System.Threading;
+
+namespace Temp
+{
+    public class Warrior
+    {
+        public string Name;
+        public int Armor;
+        public int Count = 0;
+
+        public Warrior(string name)
+        {
+            Name = name;
+        }
+    }
+    internal class Program
+    {
+
+        static public void RedWins(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(text);
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
+
+        static public void BlueWins(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write(text);
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
+
+        static public double Percent(double first, double last)
+        {
+            double result = (first / (last + first)) * 100;
+            double x = Math.Round(result, 2);
+            return x;
+        }
+
+        static public double DrawPercent(double allCount, double red, double blue)
+        {
+            double result = (((allCount - (red + blue)) / allCount) * 100);
+            double x = Math.Round(result, 2);
+            return x;
+        }
+
+        static void Main(string[] args)
+        {
+            Random Random = new Random();
+
+            Warrior Radio = new Warrior("Alastor");
+            Warrior TV = new Warrior("Vox");
+
+            int Iterations = Random.Next(1, 1001);
+            int AllCount = 0;
+
+            for (int i = 1; i <= Iterations; i++)
+            {
+                Radio.Armor = Random.Next(80, 101);
+                TV.Armor = Random.Next(80, 101);
+
+                while (Radio.Armor > 0 | TV.Armor > 0)
+                {
+                    Console.WriteLine($"{Radio.Name}: {Radio.Armor} | {TV.Name}: {TV.Armor}");
+
+                    Radio.Armor -= Random.Next(0, 21);
+                    TV.Armor -= Random.Next(0, 21);
+
+                    if (Radio.Armor <= 0)
+                    {
+                        if (Radio.Armor <= 0 & TV.Armor <= 0)
+                        {
+                            Console.WriteLine("Winner: Nobody.\n");
+                            AllCount += 1;
+                            break;
+                        }
+                        Console.WriteLine($"            | {TV.Name}: {TV.Armor}");
+                        Console.Write($"\nWinner: ");
+                        BlueWins(TV.Name);
+                        Console.WriteLine(".");
+                        TV.Count += 1;
+                        AllCount += 1;
+                        break;
+                    }
+                    else if (TV.Armor <= 0)
+                    {
+                        if (Radio.Armor <= 0 & TV.Armor <= 0)
+                        {
+                            Console.WriteLine("Winner: Nobody.\n");
+                            AllCount += 1;
+                            break;
+                        }
+                        Console.WriteLine($"{Radio.Name}: {Radio.Armor} |");
+                        Console.Write($"\nWinner: ");
+                        RedWins(Radio.Name);
+                        Console.WriteLine(".");
+                        Radio.Count += 1;
+                        AllCount += 1;
+                        break;
+                    }
+
+                    Thread.Sleep(1000);
+                }
+                Console.WriteLine($"Цикл {i} закончен.\n");
+                Thread.Sleep(1000);
+            }
+            Console.WriteLine($"Информация:\n" +
+                $"Количество побед песонажа {Radio.Name}: {Radio.Count} ({Percent(Radio.Count, TV.Count)}%);\n" +
+                $"Количество побед персонажа {TV.Name}: {TV.Count} ({Percent(TV.Count, Radio.Count)}%);\n" +
+                $"Количество ничейных исходов: {AllCount - (Radio.Count + TV.Count)} ({DrawPercent(AllCount, Radio.Count, TV.Count)}%);\n" +
+                $"Количество всех баталий: {AllCount}.");
+
+        }
+    }
+}
