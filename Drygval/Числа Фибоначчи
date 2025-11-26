@@ -1,0 +1,66 @@
+using System;
+
+class Fibonacci
+{
+    static void Main()
+    {
+        Console.WriteLine("Программа вывода первых N чисел Фибоначчи");
+
+        // Ввод N с проверкой корректности
+        int n;
+        while (true)
+        {
+            Console.Write("Введите N (количество чисел Фибоначчи): ");
+            string input = Console.ReadLine();
+
+            if (int.TryParse(input, out n) && n > 0)
+            {
+                break; // Ввод корректен
+            }
+            else
+            {
+                Console.WriteLine("Ошибка: введите положительное целое число.");
+            }
+        }
+
+        Console.WriteLine($"\nПервые {n} чисел Фибоначчи:");
+
+        // Выводим числа Фибоначчи
+        PrintFibonacci(n);
+
+        Console.WriteLine("\nНажмите любую клавишу для выхода...");
+        Console.ReadKey();
+    }
+
+    /// <summary>
+    /// Выводит первые n чисел Фибоначчи.
+    /// </summary>
+    /// <param name="count">Количество чисел для вывода</param>
+    static void PrintFibonacci(int count)
+    {
+        if (count >= 1)
+            Console.Write("0");
+
+        if (count >= 2)
+            Console.Write(" 1");
+
+        // Для count > 2 вычисляем последующие числа
+        if (count > 2)
+        {
+            long prev = 0;  // F(0)
+            long curr = 1;  // F(1)
+
+            for (int i = 3; i <= count; i++)
+            {
+                long next = prev + curr;
+                Console.Write($" {next}");
+
+                // Обновляем предыдущие значения
+                prev = curr;
+                curr = next;
+            }
+        }
+
+        Console.WriteLine(); // Перевод строки в конце
+    }
+}
