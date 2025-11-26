@@ -1,0 +1,42 @@
+using System;
+
+class PalindromeChecker
+{
+    static void Main()
+    {
+        Console.WriteLine("Введите строку для проверки на палиндром:");
+        string input = Console.ReadLine();
+
+
+        if (IsPalindrome(input))
+        {
+            Console.WriteLine("Строка является палиндромом.");
+        }
+        else
+        {
+            Console.WriteLine("Строка не является палиндромом.");
+        }
+    }
+
+    /// <summary>
+    /// Проверяет, является ли строка палиндромом (без учёта регистра и пробелов).
+    /// </summary>
+    /// <param name="text">Входная строка</param>
+    /// <returns>true, если строка — палиндром; иначе false</returns>
+    static bool IsPalindrome(string text)
+    {
+        // Если строка null или пустая — считаем палиндромом
+        if (string.IsNullOrEmpty(text))
+            return true;
+
+        // Удаляем пробелы и преобразуем в нижний регистр
+        string cleaned = text.Replace(" ", "").ToLower();
+
+        // Сравниваем строку с её обратной версией
+        char[] charArray = cleaned.ToCharArray();
+        Array.Reverse(charArray);
+        string reversed = new string(charArray);
+
+        return cleaned == reversed;
+    }
+}
