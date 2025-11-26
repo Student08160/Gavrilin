@@ -1,0 +1,18 @@
+using System;
+using System.IO;
+
+class BackupManager
+{
+    public static void CreateBackup(string sourceFilePath)
+    {
+        if (!File.Exists(sourceFilePath))
+        {
+            Console.WriteLine("Исходный файл не найден.");
+            return;
+        }
+
+        string backupPath = $"{sourceFilePath}_{DateTime.Now:yyyyMMdd_HHmmss}.bak";
+        File.Copy(sourceFilePath, backupPath);
+        Console.WriteLine($"Резервная копия создана: {backupPath}");
+    }
+}
