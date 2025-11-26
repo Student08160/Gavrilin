@@ -1,0 +1,55 @@
+public class Fraction
+{
+    public int Numerator { get; private set; }
+    public int Denominator { get; private set; }
+
+    public Fraction(int numerator, int denominator)
+    {
+        if (denominator == 0)
+            throw new ArgumentException("Знаменатель не может быть нулём.");
+        
+        Numerator = numerator;
+        Denominator = denominator;
+        Simplify();
+    }
+
+    private void Simplify()
+    {
+        int gcd = Gcd(Math.Abs(Numerator), Math.Abs(Denominator));
+        Numerator /= gcd;
+        Denominator /= gcd;
+
+        // Сохраняем знак в числителе
+        if (Denominator < 0)
+        {
+            Numerator = -Numerator;
+            Denominator = -Denominator;
+        }
+    }
+
+    private int Gcd(int a, int b)
+    {
+        while (b != 0)
+        {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+
+    public static Fraction operator +(Fraction a, Fraction b) =>
+        new Fraction(a.Numerator * b.Denominator + b.Numerator * a.Denominator, a.Denominator * b.Denominator);
+
+    public static Fraction operator -(Fraction a, Fraction b) =>
+        new Fraction(a.Numerator * b.Denominator - b.Numerator * a.Denominator, a.Denominator * b.Denominator);
+    public static Fraction operator *(Fraction a, Fraction b) =>
+        new Fraction(a.Numerator * b.Numerator, a.Denominator * b.Denominator);
+    public static Fraction operator /(Fraction a, Fraction b)
+    {
+        if (b.Numerator == 0) throw new DivideByZeroException();
+        return new Fraction(a.Numerator * b.Denominator, a.Denominator * b.Numerator);
+    }
+
+    public override string ToString() => $"{Numerator}/{Denominator}";
+}
