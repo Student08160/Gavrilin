@@ -1,0 +1,51 @@
+using System;
+using System.IO;
+
+namespace FileSumApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Это имя файла
+            string filePath = "numbers.txt";
+            long sum = 0; // Используем long, чтобы избежать переполнения, если сумма будет большой
+
+            // Проверяем, существует ли файл перед чтением
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    // Считываем все строки из файла (ленивое чтение)
+                    foreach (string line in File.ReadLines(filePath))
+                    {
+                        // Пробуем превратить строку в число
+                        // TryParse вернет true, если это число, и запишет его в number
+                        if (int.TryParse(line, out int number))
+                        {
+                            sum += number;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Внимание: Строка '{line}' не является целым числом и будет пропущена.");
+                        }
+                    }
+
+                    Console.WriteLine($"Сумма всех чисел в файле: {sum}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Произошла ошибка при чтении файла: {ex.Message}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Файл numbers.txt не найден!");
+                Console.WriteLine("Убедитесь, что файл находится в одной папке с исполняемым файлом программы.");
+            }
+
+            // Чтобы консоль не закрылась сразу
+            Console.ReadKey();
+        }
+    }
+}
