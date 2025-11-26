@@ -1,0 +1,25 @@
+public static bool IsPrime(int number)
+{
+    // 1. Числа меньше 2 (0, 1, отрицательные) не являются простыми
+    if (number < 2) return false;
+
+    // 2. Число 2 — единственное четное простое число
+    if (number == 2) return true;
+
+    // 3. Если число четное и не равно 2 — оно не простое
+    if (number % 2 == 0) return false;
+
+    // 4. Ищем делители только до квадратного корня числа.
+    // Мы идем с шагом 2 (3, 5, 7...), так как четные мы уже проверили.
+    var boundary = (int)Math.Floor(Math.Sqrt(number));
+
+    for (int i = 3; i <= boundary; i += 2)
+    {
+        if (number % i == 0)
+        {
+            return false; // Нашли делитель -> число составное
+        }
+    }
+
+    return true; // Делителей не найдено -> число простое
+}
