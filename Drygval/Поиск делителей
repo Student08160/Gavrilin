@@ -1,0 +1,93 @@
+using System;
+using System.Collections.Generic;
+
+class DivisorsFinder
+{
+    static void Main()
+    {
+        Console.WriteLine("Программа поиска всех делителей числа");
+        
+        // Ввод числа с проверкой корректности
+        int number;
+        while (true)
+        {
+            Console.Write("Введите целое число: ");
+            string input = Console.ReadLine();
+            
+            if (int.TryParse(input, out number))
+            {
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Ошибка: введите корректное целое число.");
+            }
+        }
+
+        Console.WriteLine($"\nДелители числа {number}:");
+
+        // Находим и выводим делители
+        List<int> divisors = FindAllDivisors(number);
+        
+        if (divisors.Count == 0)
+        {
+            Console.WriteLine("Нет делителей (число 0).");
+        }
+        else
+        {
+            // Выводим делители через запятую
+            Console.WriteLine(string.Join(", ", divisors));
+        }
+
+        Console.WriteLine("\nНажмите любую клавишу для выхода...");
+        Console.ReadKey();
+    }
+
+    /// <summary>
+    /// Находит все делители заданного числа.
+    /// Для отрицательных чисел ищет делители по модулю, затем добавляет отрицательные аналоги.
+    /// </summary>
+    /// <param name="num">Число, для которого ищем делители</param>
+    /// <returns>Список всех делителей (отсортированный)</returns>
+    static List<int> FindAllDivisors(int num)
+    {
+        List<int> divisors = new List<int>();
+        
+        // Если число 0 — у него нет делителей (любое число на 0 не делится)
+        if (num == 0)
+            return divisors;
+
+        // Работаем с модулем числа, чтобы упростить поиск
+        int absNum = Math.Abs(num);
+
+        // Ищем делители от 1 до sqrt(absNum)
+        for (int i = 1; i <= Math.Sqrt(absNum); i++)
+        {
+            if (absNum % i == 0)  // i — делитель
+            {
+                divisors.Add(i);
+                
+                // Добавляем парный делитель (absNum / i), если он не совпадает с i
+                if (i != absNum / i)
+                {
+                    divisors.Add(absNum / i);
+                }
+            }
+        }
+
+        // Для отрицательных чисел добавляем отрицательные делители
+        if (num < 0)
+        {
+            List<int> negativeDivisors = new List<int>();
+            foreach (int d in divisors)
+            {
+                negativeDivisors.Add(-d);
+            }
+            divisors.AddRange(negativeDivisors);
+        }
+
+        // Сортируем делители по возрастанию
+        divisors.Sort();
+        return divisors;
+    }
+}
