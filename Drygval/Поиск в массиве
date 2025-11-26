@@ -1,0 +1,63 @@
+using System;
+using System.Linq; // Нужно для варианта с LINQ (см. ниже)
+
+namespace ArraySearch
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // 1. Создаем массив на 15 элементов
+            int[] numbers = new int[15];
+            Random random = new Random();
+
+            Console.WriteLine("Сгенерированный массив:");
+
+            // 2. Заполняем массив случайными числами и выводим их
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                // random.Next(0, 101) вернет число от 0 до 100 включительно
+                // (верхняя граница 101 не включается)
+                numbers[i] = random.Next(0, 101);
+                Console.Write(numbers[i] + " ");
+            }
+
+            Console.WriteLine("\n"); // Просто пустая строка для красоты
+
+            // 3. Запрашиваем число у пользователя
+            Console.Write("Введите число для поиска: ");
+            
+            // Используем безопасный ввод (TryParse), чтобы программа не упала, если введут буквы
+            if (int.TryParse(Console.ReadLine(), out int targetNumber))
+            {
+                // 4. Алгоритм поиска (Линейный поиск)
+                bool isFound = false;
+
+                foreach (int number in numbers)
+                {
+                    if (number == targetNumber)
+                    {
+                        isFound = true;
+                        break; // Число нашли, дальше искать нет смысла
+                    }
+                }
+
+                // 5. Вывод результата
+                if (isFound)
+                {
+                    Console.WriteLine("Найдено");
+                }
+                else
+                {
+                    Console.WriteLine("Не найдено");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Ошибка: Вы ввели не целое число.");
+            }
+
+            Console.ReadKey();
+        }
+    }
+}
