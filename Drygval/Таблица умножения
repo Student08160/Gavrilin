@@ -1,0 +1,39 @@
+using System;
+
+class MultiplicationTable
+{
+    static void Main()
+    {
+        Console.WriteLine("Таблица умножения (1–10)");
+        Console.WriteLine();
+
+        // Выводим шапку таблицы (множители по горизонтали)
+        Console.Write("    ");
+        for (int j = 1; j <= 10; j++)
+        {
+            Console.Write($"{j,4}");
+        }
+        Console.WriteLine();
+        Console.WriteLine();
+
+        // Заполняем строки таблицы
+        for (int i = 1; i <= 10; i++)
+        {
+            // Выводим множитель по вертикали
+            Console.Write($"{i,2} |");
+
+            // Вычисляем и выводим произведения
+            for (int j = 1; j <= 10; j++)
+            {
+                int product = i * j;
+                Console.Write($"{product,4}");
+            }
+
+            Console.WriteLine(); // Переход на новую строку
+        }
+
+        // По желанию: пауза перед закрытием консоли
+        Console.WriteLine("\nНажмите любую клавишу для выхода...");
+        Console.ReadKey();
+    }
+}
