@@ -1,0 +1,30 @@
+using System;
+using System.Collections.Generic;
+
+
+public class FactorialCalculator
+{
+    private Dictionary<int, long> cache = new Dictionary<int, long>();
+
+    public long CalculateFactorial(int n)
+    {
+        if (n < 0)
+            throw new ArgumentException("Факториал отрицательного числа не определён.");
+        
+        if (n == 0 || n == 1)
+            return 1;
+
+        // Проверяем, есть ли результат в кэше
+        if (cache.ContainsKey(n))
+        {
+            Console.WriteLine($"Кэшированный результат для {n}!");
+            return cache[n];
+        }
+
+        // Вычисляем факториал и сохраняем в кэш
+        long result = n * CalculateFactorial(n - 1);
+        cache[n] = result;
+        
+        return result;
+    }
+}
