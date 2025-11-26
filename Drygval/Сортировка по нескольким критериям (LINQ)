@@ -1,0 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class StudentSorter
+{
+    public static List<Student> SortStudents(List<Student> students)
+    {
+        return students
+            .OrderByDescending(s => s.Grade)
+            .ThenBy(s => s.LastName)
+            .ToList();
+    }
+}
