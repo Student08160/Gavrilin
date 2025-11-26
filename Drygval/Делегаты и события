@@ -1,0 +1,85 @@
+using System;
+using System.Threading;
+
+// Делегат для события таймера
+public delegate void TickHandler();
+
+// Класс таймера
+public class Timer
+{
+    // Событие, которое будет вызываться каждую секунду
+    public event TickHandler OnTick;
+
+    // Флаг для управления работой таймера
+    private bool _isRunning;
+
+    // Метод для запуска таймера
+    public void Start()
+    {
+        _isRunning = true;
+        // Запускаем отдельный поток для работы таймера
+        Thread timerThread = new Thread(Run);
+        timerThread.IsBackground = true; // Поток будет завершён при завершении приложения
+        timerThread.Start();
+    }
+
+    // Метод для остановки таймера
+    public void Stop()
+    {
+        _isRunning = false;
+    }
+
+    // Основной метод, работающий в отдельном потоке
+    private void Run()
+    {
+        while (_isRunning)
+        {
+            // Вызываем событие OnTick
+            OnTick?.Invoke();
+
+            // Ждём 1000 мс (1 секунду)
+            Thread.Sleep(1000);
+        }
+    }
+}
+
+// Класс подписчика, который реагирует на событие таймера
+public class TimeDisplaySubscriber
+{
+    // Метод, который будет вызываться при срабатывании события
+    public void DisplayCurrentTime()
+    {
+        Console.WriteLine($"Текущее время: {DateTime.Now:HH:mm:ss}");
+    }
+}
+
+// Пример использования
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Создаём экземпляр таймера
+        Timer timer = new Timer();
+
+        // Создаём подписчика
+        TimeDisplaySubscriber subscriber = new TimeDisplaySubscriber();
+
+        // Подписываемся на событие OnTick
+        timer.OnTick += subscriber.DisplayCurrentTime;
+
+        Console.WriteLine("Таймер запущен. Нажмите 'q' для остановки.");
+
+        // Запускаем таймер
+        timer.Start();
+
+        // Ждём ввода пользователя для остановки таймера
+        while (Console.ReadKey().KeyChar != 'q')
+        {
+            // Ничего не делаем, просто ждём
+        }
+
+        // Останавливаем таймер
+        timer.Stop();
+        Console.WriteLine("Таймер остановлен.");
+    }
+}
