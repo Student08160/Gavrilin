@@ -1,0 +1,11 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class IntersectionFinder
+{
+    public static List<int> FindCommon(List<int> list1, List<int> list2)
+    {
+        return list1.Intersect(list2).ToList();
+    }
+}
