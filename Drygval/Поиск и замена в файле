@@ -1,0 +1,19 @@
+using System;
+using System.IO;
+
+class FileReplacer
+{
+    public static void ReplaceInFile(string filePath, string searchText, string replaceText)
+    {
+        if (!File.Exists(filePath))
+        {
+            Console.WriteLine("Файл не найден.");
+            return;
+        }
+
+        string content = File.ReadAllText(filePath);
+        content = content.Replace(searchText, replaceText);
+        File.WriteAllText(filePath, content);
+        Console.WriteLine("Замена выполнена.");
+    }
+}
