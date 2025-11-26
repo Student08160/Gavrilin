@@ -1,0 +1,22 @@
+public abstract class Document
+{
+    public abstract void Print();
+}
+
+public class TextDocument : Document
+{
+    public string Content { get; set; }
+
+    public TextDocument(string content) => Content = content;
+
+    public override void Print() => Console.WriteLine($"Текст: {Content}");
+}
+
+public class ImageDocument : Document
+{
+    public string ImagePath { get; set; }
+
+    public ImageDocument(string path) => ImagePath = path;
+
+    public override void Print() => Console.WriteLine($"Изображение: {ImagePath}");
+}
