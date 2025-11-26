@@ -1,0 +1,47 @@
+using System;
+
+namespace RecursiveFactorial
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Введите число для вычисления факториала: ");
+            
+            if (int.TryParse(Console.ReadLine(), out int number))
+            {
+                if (number < 0)
+                {
+                    Console.WriteLine("Факториал отрицательного числа не определен.");
+                }
+                else
+                {
+                    // Вызов рекурсивной функции
+                    long result = CalculateFactorial(number);
+                    Console.WriteLine($"Факториал {number}! = {result}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Ошибка: Введите целое число.");
+            }
+
+            Console.ReadKey();
+        }
+
+        // --- Рекурсивная функция ---
+        // Используем тип long, так как факториал очень быстро растет
+        // (int переполнится уже на числе 13, long хватит до 20)
+        static long CalculateFactorial(int n)
+        {
+            // 1. Базовый случай: факториал 0 и 1 равен 1
+            if (n == 0 || n == 1)
+            {
+                return 1;
+            }
+
+            // 2. Рекурсивный вызов: n * факториал(n-1)
+            return n * CalculateFactorial(n - 1);
+        }
+    }
+}
