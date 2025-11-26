@@ -1,0 +1,67 @@
+using System;
+
+class PerfectNumberChecker
+{
+    static void Main()
+    {
+        Console.WriteLine("Проверка, является ли число совершенным");
+        
+        // Ввод числа с проверкой корректности
+        int number;
+        while (true)
+        {
+            Console.Write("Введите натуральное число: ");
+            string input = Console.ReadLine();
+            
+            if (int.TryParse(input, out number) && number > 0)
+            {
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Ошибка: введите положительное целое число.");
+            }
+        }
+
+        // Проверяем, совершенное ли число
+        bool isPerfect = IsPerfectNumber(number);
+        
+        // Выводим результат
+        if (isPerfect)
+        {
+            Console.WriteLine($"{number} — совершенное число.");
+        }
+        else
+        {
+            Console.WriteLine($"{number} — не совершенное число.");
+        }
+
+        Console.WriteLine("\nНажмите любую клавишу для выхода...");
+        Console.ReadKey();
+    }
+
+    /// <summary>
+    /// Проверяет, является ли число совершенным.
+    /// </summary>
+    /// <param name="num">Проверяемое число (должно быть > 0)</param>
+    /// <returns>true, если число совершенное; иначе false</returns>
+    static bool IsPerfectNumber(int num)
+    {
+        if (num <= 1)
+            return false; // 1 и меньше не считаются совершенными
+
+        int sumOfDivisors = 0;
+
+        // Перебираем делители от 1 до num/2 (больших делителей, кроме num, быть не может)
+        for (int i = 1; i <= num / 2; i++)
+        {
+            if (num % i == 0) // i — делитель
+            {
+                sumOfDivisors += i;
+            }
+        }
+
+        // Число совершенное, если сумма делителей равна самому числу
+        return sumOfDivisors == num;
+    }
+}
