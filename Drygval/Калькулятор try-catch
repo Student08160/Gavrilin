@@ -1,0 +1,79 @@
+using System;
+
+namespace SimpleCalculator
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("--- Простой Калькулятор ---");
+
+            try
+            {
+                // 1. Ввод первого числа
+                Console.Write("Введите первое число: ");
+                // Если пользователь введет текст вместо числа, здесь возникнет FormatException
+                double num1 = double.Parse(Console.ReadLine());
+
+                // 2. Ввод оператора
+                Console.Write("Введите операцию (+, -, *, /): ");
+                string op = Console.ReadLine();
+
+                // 3. Ввод второго числа
+                Console.Write("Введите второе число: ");
+                double num2 = double.Parse(Console.ReadLine());
+
+                double result = 0;
+
+                // 4. Выполнение операции
+                switch (op)
+                {
+                    case "+":
+                        result = num1 + num2;
+                        break;
+                    case "-":
+                        result = num1 - num2;
+                        break;
+                    case "*":
+                        result = num1 * num2;
+                        break;
+                    case "/":
+                        // Особенность C#: деление double на 0 дает "Infinity", а не ошибку.
+                        // Чтобы сработал catch(DivideByZeroException), проверяем вручную:
+                        if (num2 == 0)
+                        {
+                            throw new DivideByZeroException();
+                        }
+                        result = num1 / num2;
+                        break;
+                    default:
+                        // Если операция неизвестна, можно выбросить исключение вручную
+                        throw new InvalidOperationException("Неизвестный оператор.");
+                }
+
+                Console.WriteLine($"Результат: {result}");
+            }
+            // Блок перехвата неверного формата (например, ввели буквы вместо цифр)
+            catch (FormatException)
+            {
+                Console.WriteLine("ОШИБКА: Вы ввели не число! Пожалуйста, вводите только цифры.");
+            }
+            // Блок перехвата деления на ноль
+            catch (DivideByZeroException)
+            {
+                Console.WriteLine("ОШИБКА: Деление на ноль невозможно!");
+            }
+            // Блок перехвата остальных ошибок (например, неизвестный оператор)
+            catch (Exception ex)
+            {
+                Console.WriteLine($"ОШИБКА: Произошла непредвиденная ошибка -> {ex.Message}");
+            }
+            finally
+            {
+                // Этот блок выполняется в любом случае
+                Console.WriteLine("\nНажмите любую клавишу для выхода...");
+                Console.ReadKey();
+            }
+        }
+    }
+}
