@@ -1,0 +1,10 @@
+public class Student : IComparable<Student>
+{
+    // ... (поля и свойства из п. 14)
+
+    public int CompareTo(Student other)
+    {
+        if (other == null) return 1;
+        return this.Grade.CompareTo(other.Grade);
+    }
+}
