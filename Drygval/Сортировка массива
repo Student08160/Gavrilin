@@ -1,0 +1,54 @@
+using System;
+
+namespace BubbleSortApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // 1. Настройки
+            int size = 10; // Размер массива
+            int[] numbers = new int[size];
+            Random random = new Random();
+
+            // 2. Заполнение массива случайными числами
+            Console.WriteLine("Исходный массив:");
+            for (int i = 0; i < size; i++)
+            {
+                numbers[i] = random.Next(0, 100); // Случайные числа от 0 до 99
+                Console.Write(numbers[i] + " ");
+            }
+            Console.WriteLine("\n"); // Отступ
+
+            // 3. Алгоритм сортировки "Пузырьком" (Bubble Sort)
+            // Внешний цикл отвечает за количество проходов по массиву
+            for (int i = 0; i < size - 1; i++)
+            {
+                // Внутренний цикл сравнивает соседние элементы
+                // (size - 1 - i) — оптимизация: с каждым проходом самый большой элемент 
+                // "всплывает" в конец, поэтому последние i элементов проверять не нужно.
+                for (int j = 0; j < size - 1 - i; j++)
+                {
+                    // Если текущий элемент больше следующего — меняем их местами
+                    if (numbers[j] > numbers[j + 1])
+                    {
+                        // Обмен значений через временную переменную temp
+                        int temp = numbers[j];
+                        numbers[j] = numbers[j + 1];
+                        numbers[j + 1] = temp;
+                    }
+                }
+            }
+
+            // 4. Вывод отсортированного массива
+            Console.WriteLine("Отсортированный массив:");
+            foreach (int num in numbers)
+            {
+                Console.Write(num + " ");
+            }
+
+            Console.WriteLine(); // Перенос строки в конце
+            Console.ReadKey(); // Задержка экрана
+        }
+    }
+}
