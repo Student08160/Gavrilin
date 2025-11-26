@@ -1,0 +1,25 @@
+using System;
+using System.IO;
+
+class TextAnalyzer
+{
+    public static void AnalyzeFile(string filePath)
+    {
+        if (!File.Exists(filePath))
+        {
+            Console.WriteLine("Файл не найден.");
+            return;
+        }
+
+        string text = File.ReadAllText(filePath);
+        
+        int charCount = text.Length;
+        int wordCount = text.Split(new char[] { ' ', '\t', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).Length;
+        int sentenceCount = text.Split(new char[] { '.', '!', '?' }, StringSplitOptions.RemoveEmptyEntries).Length;
+
+
+        Console.WriteLine($"Символов: {charCount}");
+        Console.WriteLine($"Слов: {wordCount}");
+        Console.WriteLine($"Предложений: {sentenceCount}");
+    }
+}
