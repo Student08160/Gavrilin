@@ -1,0 +1,17 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class Product
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+}
+
+class ProductConverter
+{
+    public static Dictionary<int, string> ConvertToDictionary(List<Product> products)
+    {
+        return products.ToDictionary(p => p.Id, p => p.Name);
+    }
+}
