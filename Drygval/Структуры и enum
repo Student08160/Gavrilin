@@ -1,0 +1,72 @@
+public enum DayOfWeek
+{
+    Понедельник,
+    Вторник,
+    Среда,
+    Четверг,
+    Пятница,
+    Суббота,
+    Воскресенье
+}
+public struct Meeting
+{
+    public DayOfWeek Day { get; set; }
+    public TimeSpan Time { get; set; }
+    public string Subject { get; set; }
+
+    public Meeting(DayOfWeek day, TimeSpan time, string subject)
+    {
+        Day = day;
+        Time = time;
+        Subject = subject;
+    }
+
+    // Для удобного вывода
+    public override string ToString()
+    {
+        return $"{Day}, {Time:hh\\:mm} — {Subject}";
+    }
+}
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        // Создаем массив встреч
+        Meeting[] meetings = new Meeting[]
+        {
+            new Meeting(DayOfWeek.Понедельник, new TimeSpan(10, 0, 0), "Планирование проекта"),
+            new Meeting(DayOfWeek.Среда, new TimeSpan(9, 30, 0), "Совещание команды"),
+            new Meeting(DayOfWeek.Среда, new TimeSpan(14, 0, 0), "Презентация клиенту"),
+            new Meeting(DayOfWeek.Пятница, new TimeSpan(11, 0, 0), "Ретроспектива"),
+            new Meeting(DayOfWeek.Среда, new TimeSpan(16, 15, 0), "Обучение сотрудников")
+        };
+
+        // Находим встречи, запланированные на среду
+        List<Meeting> wednesdayMeetings = new List<Meeting>();
+
+        foreach (Meeting meeting in meetings)
+        {
+            if (meeting.Day == DayOfWeek.Среда)
+            {
+                wednesdayMeetings.Add(meeting);
+            }
+        }
+
+        // Выводим результат
+        Console.WriteLine("Встречи, запланированные на среду:");
+        if (wednesdayMeetings.Count == 0)
+        {
+            Console.WriteLine("Нет встреч на среду.");
+        }
+        else
+        {
+            foreach (Meeting meeting in wednesdayMeetings)
+            {
+                Console.WriteLine(meeting);
+            }
+        }
+    }
+}
