@@ -1,0 +1,59 @@
+using System;
+
+
+class DigitSumCalculator
+{
+    static void Main()
+    {
+        Console.WriteLine("Программа вычисления суммы цифр числа");
+        
+        // Ввод числа с проверкой корректности
+        int number;
+        while (true)
+        {
+            Console.Write("Введите целое число: ");
+            string input = Console.ReadLine();
+            
+            if (int.TryParse(input, out number))
+            {
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Ошибка: введите корректное целое число.");
+            }
+        }
+
+        // Вычисляем сумму цифр
+        int digitSum = CalculateDigitSum(number);
+        
+        // Выводим результат
+        Console.WriteLine($"Сумма цифр числа {number} равна {digitSum}");
+        
+        Console.WriteLine("\nНажмите любую клавишу для выхода...");
+        Console.ReadKey();
+    }
+
+    /// <summary>
+    /// Вычисляет сумму цифр заданного числа.
+    /// Для отрицательных чисел учитывается модуль числа (знак игнорируется).
+    /// </summary>
+    /// <param name="num">Число, для которого вычисляем сумму цифр</param>
+    /// <returns>Сумма цифр числа</returns>
+    static int CalculateDigitSum(int num)
+    {
+        // Работаем с модулем числа, чтобы игнорировать знак
+        int absNum = Math.Abs(num);
+        int sum = 0;
+
+        // Пока число не станет нулём, извлекаем последнюю цифру и добавляем к сумме
+        while (absNum > 0)
+        {
+            int digit = absNum % 10;  // Получаем последнюю цифру
+            sum += digit;             // Добавляем к сумме
+            absNum /= 10;            // Убираем последнюю цифру
+        }
+
+        return sum;
+    }
+}
