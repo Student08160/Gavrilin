@@ -1,0 +1,21 @@
+using System;
+using System.IO;
+
+class CsvParser
+{
+    public static void ParseCsv(string filePath)
+    {
+        if (!File.Exists(filePath))
+        {
+            Console.WriteLine("Файл не найден.");
+            return;
+        }
+
+        string[] lines = File.ReadAllLines(filePath);
+        foreach (string line in lines)
+        {
+            string[] fields = line.Split(',');
+            Console.WriteLine(string.Join(" | ", fields));
+        }
+    }
+}
