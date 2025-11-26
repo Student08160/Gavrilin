@@ -1,0 +1,25 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class Student
+{
+    public string LastName { get; set; }
+    // другие свойства...
+}
+
+class StudentGrouping
+{
+    public static void GroupStudents(List<Student> students)
+    {
+        var groups = students
+            .GroupBy(s => s.LastName[0])
+            .Select(g => new { Letter = g.Key, Count = g.Count() });
+
+
+        foreach (var group in groups)
+        {
+            Console.WriteLine($"Буква '{group.Letter}': {group.Count} студентов");
+        }
+    }
+}
