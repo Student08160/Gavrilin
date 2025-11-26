@@ -1,0 +1,16 @@
+using System;
+using System.Linq;
+
+class ArrayStats
+{
+    public static void CalculateStats(int[] numbers)
+    {
+        double average = numbers.Average();
+        int positiveCount = numbers.Count(n => n > 0);
+        int max = numbers.Max();
+
+        Console.WriteLine($"Среднее: {average}");
+        Console.WriteLine($"Положительных чисел: {positiveCount}");
+        Console.WriteLine($"Максимальное число: {max}");
+    }
+}
