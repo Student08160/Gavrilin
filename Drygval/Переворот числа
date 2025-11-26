@@ -1,0 +1,61 @@
+using System;
+
+class NumberReverser
+{
+    static void Main()
+    {
+        Console.WriteLine("Программа переворота числа");
+        
+        // Ввод числа с проверкой корректности
+        long number;
+        while (true)
+        {
+            Console.Write("Введите целое число: ");
+            string input = Console.ReadLine();
+            
+            if (long.TryParse(input, out number))
+            {
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Ошибка: введите корректное целое число.");
+            }
+        }
+
+        // Переворачиваем число
+        long reversed = ReverseNumber(number);
+        
+        // Выводим результат
+        Console.WriteLine($"Исходное число: {number}");
+        Console.WriteLine($"Перевёрнутое число: {reversed}");
+        
+        Console.WriteLine("\nНажмите любую клавишу для выхода...");
+        Console.ReadKey();
+    }
+
+    /// <summary>
+    /// Переворачивает цифры заданного числа, сохраняя знак.
+    /// </summary>
+    /// <param name="num">Число для переворота</param>
+    /// <returns>Перевёрнутое число</returns>
+    static long ReverseNumber(long num)
+    {
+        // Сохраняем знак числа
+        int sign = num < 0 ? -1 : 1;
+        // Работаем с модулем числа
+        long absNum = Math.Abs(num);
+        long reversed = 0;
+
+        // Пока число не станет нулём, извлекаем последнюю цифру
+        while (absNum > 0)
+        {
+            long digit = absNum % 10;      // Получаем последнюю цифру
+            reversed = reversed * 10 + digit; // Добавляем цифру в перевёрнутое число
+            absNum /= 10;                 // Убираем последнюю цифру
+        }
+
+        // Возвращаем число с исходным знаком
+        return reversed * sign;
+    }
+}
