@@ -1,0 +1,48 @@
+using System;
+
+// Интерфейс, который должен реализовывать исходный класс
+public interface ILoggerTarget
+{
+    void DoWork();
+    int GetValue();
+}
+
+// Исходный класс (пример)
+public class Worker : ILoggerTarget
+{
+    public void DoWork()
+    {
+        Console.WriteLine("Worker: Выполняю работу...");
+    }
+
+    public int GetValue()
+    {
+        return 42;
+    }
+}
+
+// Декоратор-логировщик
+public class LoggingDecorator : ILoggerTarget
+{
+    private readonly ILoggerTarget _target;
+
+    public LoggingDecorator(ILoggerTarget target)
+    {
+        _target = target;
+    }
+
+    public void DoWork()
+    {
+        Console.WriteLine($"[LOG] Вызов метода DoWork() у {_target.GetType().Name}");
+        _target.DoWork();
+        Console.WriteLine($"[LOG] Завершение DoWork()");
+    }
+
+    public int GetValue()
+    {
+        Console.WriteLine($"[LOG] Вызов метода GetValue() у {_target.GetType().Name}");
+        int result = _target.GetValue();
+        Console.WriteLine($"[LOG] GetValue() вернул {result}");
+        return result;
+    }
+}
