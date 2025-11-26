@@ -1,0 +1,53 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class Student
+{
+    public string Name { get; set; }
+    public int Grade { get; set; } // Оценка
+
+    public Student(string name, int grade)
+    {
+        Name = name;
+        Grade = grade;
+    }
+
+    // Для удобного вывода
+    public override string ToString()
+    {
+        return $"{Name}: {Grade}";
+    }
+}
+
+List<Student> students = new List<Student>
+{
+    new Student("Анна", 8),
+    new Student("Борис", 6),
+    new Student("Виктор", 9),
+    new Student("Галина", 7),
+    new Student("Дмитрий", 10),
+    new Student("Елена", 5)
+};
+// а) Сортируем по оценке по убыванию
+var sortedByGradeDesc = students
+    .OrderByDescending(s => s.Grade)
+    .ToList();
+
+// б) Выбираем студентов с оценкой > 7
+var highGrades = students
+    .Where(s => s.Grade > 7)
+    .ToList();
+
+// в) Выводим результаты на экран
+Console.WriteLine("Все студенты, отсортированные по оценке (по убыванию):");
+foreach (var student in sortedByGradeDesc)
+{
+    Console.WriteLine(student);
+}
+
+Console.WriteLine("\nСтуденты с оценкой выше 7:");
+foreach (var student in highGrades)
+{
+    Console.WriteLine(student);
+}
