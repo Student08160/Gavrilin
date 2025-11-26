@@ -1,0 +1,74 @@
+using System;
+
+class GcdCalculator
+{
+    static void Main()
+    {
+        Console.WriteLine("Калькулятор НОД (наибольшего общего делителя)");
+        Console.WriteLine("Используется алгоритм Евклида");
+        
+        // Ввод первого числа
+        int a;
+        while (true)
+        {
+            Console.Write("Введите первое целое число: ");
+            string input = Console.ReadLine();
+            if (int.TryParse(input, out a))
+            {
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Ошибка: введите корректное целое число.");
+            }
+        }
+
+        // Ввод второго числа
+        int b;
+        while (true)
+        {
+            Console.Write("Введите второе целое число: ");
+            string input = Console.ReadLine();
+            if (int.TryParse(input, out b))
+            {
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Ошибка: введите корректное целое число.");
+            }
+        }
+
+        // Вычисляем НОД
+        int gcd = CalculateGcd(a, b);
+        
+        // Выводим результат
+        Console.WriteLine($"\nНОД({a}, {b}) = {gcd}");
+        
+        Console.WriteLine("\nНажмите любую клавишу для выхода...");
+        Console.ReadKey();
+    }
+
+    /// <summary>
+    /// Вычисляет НОД двух чисел по алгоритму Евклида (итеративный вариант).
+    /// </summary>
+    /// <param name="a">Первое число</param>
+    /// <param name="b">Второе число</param>
+    /// <returns>Наибольший общий делитель чисел a и b</returns>
+    static int CalculateGcd(int a, int b)
+    {
+        // Работаем с модулями чисел (НОД не зависит от знака)
+        a = Math.Abs(a);
+        b = Math.Abs(b);
+
+        // Алгоритм Евклида: пока одно из чисел не ноль
+        while (b != 0)
+        {
+            int temp = b;      // Сохраняем текущее значение b
+            b = a % b;       // b становится остатком от деления a на b
+            a = temp;        // a становится предыдущим значением b
+        }
+
+        return a; // Когда b стало 0, a содержит НОД
+    }
+}
