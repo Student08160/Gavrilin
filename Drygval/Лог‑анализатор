@@ -1,0 +1,28 @@
+using System;
+using System.IO;
+
+class LogAnalyzer
+{
+    public static void FindErrors(string filePath)
+    {
+        if (!File.Exists(filePath))
+        {
+            Console.WriteLine("Файл лога не найден.");
+            return;
+        }
+
+        string[] lines = File.ReadAllLines(filePath);
+        int count = 0;
+
+        foreach (string line in lines)
+        {
+            if (line.Contains("ERROR") || line.Contains("EXCEPTION"))
+            {
+                Console.WriteLine(line);
+                count++;
+            }
+        }
+
+        Console.WriteLine($"\nНайдено записей с ERROR/EXCEPTION: {count}");
+    }
+}
