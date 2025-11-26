@@ -1,0 +1,49 @@
+using System;
+
+class GuessTheNumber
+{
+    static void Main()
+    {
+        Console.WriteLine("Игра «Угадай число»");
+        Console.WriteLine("Компьютер загадал число от 1 до 100. Попробуйте угадать!");
+
+        // Генерируем случайное число
+        Random random = new Random();
+        int secretNumber = random.Next(1, 101); // от 1 до 100 включительно
+        int attempts = 0;
+        bool guessed = false;
+
+        while (!guessed)
+        {
+            Console.Write("Ваше предположение: ");
+            string input = Console.ReadLine();
+
+            // Проверяем корректность ввода
+            if (!int.TryParse(input, out int guess))
+            {
+                Console.WriteLine("Пожалуйста, введите целое число.");
+                continue;
+            }
+
+            attempts++;
+
+            // Сравниваем с загаданным числом
+            if (guess < secretNumber)
+            {
+                Console.WriteLine("Загаданное число больше.");
+            }
+            else if (guess > secretNumber)
+            {
+                Console.WriteLine("Загаданное число меньше.");
+            }
+            else
+            {
+                guessed = true;
+                Console.WriteLine($"\nПоздравляем! Вы угадали число {secretNumber} за {attempts} попыток.");
+            }
+        }
+
+        Console.WriteLine("\nСпасибо за игру! Нажмите любую клавишу для выхода...");
+        Console.ReadKey();
+    }
+}
