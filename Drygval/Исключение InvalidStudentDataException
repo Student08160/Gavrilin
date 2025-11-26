@@ -1,0 +1,44 @@
+public class InvalidStudentDataException : Exception
+{
+    public InvalidStudentDataException(string message) : base(message) { }
+}
+
+public class Student
+{
+    private string name;
+    private int age;
+    private double grade;
+
+    public string Name
+    {
+        get => name;
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new InvalidStudentDataException("Имя не может быть пустым.");
+            name = value;
+        }
+    }
+
+    public int Age
+    {
+        get => age;
+        set
+        {
+            if (value < 5 || value > 100)
+                throw new InvalidStudentDataException("Возраст должен быть от 5 до 100.");
+            age = value;
+        }
+    }
+
+    public double Grade
+    {
+        get => grade;
+        set
+        {
+            if (value < 0 || value > 5)
+                throw new InvalidStudentDataException("Оценка должна быть от 0 до 5.");
+            grade = value;
+        }
+    }
+}
