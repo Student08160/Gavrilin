@@ -1,0 +1,43 @@
+using System;
+using System.IO;
+using System.Text;
+
+namespace UserDataRecorder
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // 1. Запрашиваем данные у пользователя
+            Console.Write("Введите имя: ");
+            string name = Console.ReadLine();
+
+            Console.Write("Введите возраст: ");
+            string age = Console.ReadLine();
+
+            // Формируем строку для записи
+            string userData = $"{name}: {age}";
+            string filePath = "users.txt";
+
+            try
+            {
+                // 2. Открываем поток для записи в файл
+                // Параметр 'true' во втором аргументе StreamWriter означает режим "Append" (добавление).
+                // Если файла нет, он будет создан. Если есть — данные допишутся в конец.
+                using (StreamWriter sw = new StreamWriter(filePath, true, Encoding.UTF8))
+                {
+                    sw.WriteLine(userData);
+                }
+
+                Console.WriteLine("Данные успешно записаны в users.txt!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Произошла ошибка при записи файла: {ex.Message}");
+            }
+
+            // Ожидание нажатия клавиши перед выходом
+            Console.ReadKey();
+        }
+    }
+}
