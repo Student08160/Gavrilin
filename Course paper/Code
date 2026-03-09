@@ -1,0 +1,118 @@
+import re
+import csv
+import os
+
+
+def parse_pgn(file_path):
+    """
+    Функция читает PGN-файл и извлекает метаданные партий.
+    """
+
+    with open(file_path, "r", encoding="utf-8-sig") as file:
+        content = file.read()
+
+    # Разбиваем файл на блоки (предположительно партии)
+    games = re.split(r'\n\s*\n', content)
+
+    results = []
+
+    for game in games:
+
+        # Убираем пробелы и пустые строки по краям
+        game = game.strip()
+
+        # Если блок пустой или не содержит PGN-тегов — пропускаем
+        if not game or not re.search(r'\[(Event|White|Black|Date|Result)\s+"', game):
+            continue
+
+        # Поиск тегов
+        date_match = re.search(r'\[Date\s+"(.*?)"\]', game)
+        white_match = re.search(r'\[White\s+"(.*?)"\]', game)
+        black_match = re.search(r'\[Black\s+"(.*?)"\]', game)
+        result_match = re.search(r'\[Result\s+"(.*?)"\]', game)
+
+        date = date_match.group(1) if date_match else None
+        white = white_match.group(1) if white_match else None
+        black = black_match.group(1) if black_match else None
+        result = result_match.group(1) if result_match else None
+
+        # Проверка обязательных полей
+        if white and black and result:
+            status = "Корректна"
+        else:
+            status = "Ошибка данных"
+
+        results.append({
+            "White": white if white else "",
+            "Black": black if black else "",
+            "Date": date if date else "",
+            "Result": result if result else "",
+            "Status": status
+        })
+
+    return results
+
+
+def save_to_csv(data, output_file):
+    """
+    Сохраняет результаты анализа в CSV-файл.
+    """
+
+    # newline='' предотвращает появление лишних пустых строк в Excel
+    with open(output_file, "w", newline="", encoding="utf-8-sig") as csvfile:
+
+        writer = csv.writer(csvfile, delimiter=";")
+
+        # Заголовки таблицы
+        writer.writerow(["White", "Black", "Date", "Result", "Status"])
+
+        for game in data:
+            writer.writerow([
+                game["White"],
+                game["Black"],
+                game["Date"],
+                game["Result"],
+                game["Status"]
+            ])
+
+
+def print_statistics(data, output_file):
+    """
+    Вывод статистики анализа.
+    """
+
+    total = len(data)
+    correct = sum(1 for g in data if g["Status"] == "Корректна")
+    errors = total - correct
+
+    print(f"Всего партий: {total}. Корректных: {correct}. Ошибок: {errors}.")
+    print(f"Результаты сохранены в файл: {output_file}")
+
+
+def main():
+    """
+    Главная функция программы.
+    """
+
+    file_name = input("Введите имя PGN-файла для анализа: ")
+
+    if not os.path.exists(file_name):
+        print("Ошибка: файл не найден.")
+        return
+
+    # --- Автоматическое формирование имени CSV ---
+    base_name = os.path.splitext(file_name)[0]  # убираем расширение
+    output_file = base_name + "_result.csv"     # добавляем новое
+
+    # Анализ PGN
+    games_data = parse_pgn(file_name)
+
+    # Сохранение
+    save_to_csv(games_data, output_file)
+
+    # Статистика
+    print_statistics(games_data, output_file)
+
+
+if __name__ == "__main__":
+    main()
