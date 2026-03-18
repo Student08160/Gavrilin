@@ -1,0 +1,100 @@
+CREATE TABLE Employees (
+	Id SERIAL UNIQUE PRIMARY KEY NOT NULL,
+	Name VARCHAR(50),
+	Age INT,
+	Department VARCHAR(50),
+	Salary DECIMAL
+);
+
+CREATE TABLE Products (
+	Id SERIAL UNIQUE PRIMARY KEY NOT NULL,
+	Name VARCHAR(50),
+	Price DECIMAL,
+	Category VARCHAR(50),
+	Stock_quantity INT
+);
+
+CREATE TABLE Orders (
+	Id SERIAL UNIQUE PRIMARY KEY NOT NULL,
+	Product_id INT NOT NULL,
+	Quantity INT,
+	Order_date DATE,
+	Customer_name VARCHAR(50)
+);
+
+INSERT INTO Employees (name, age, department, salary) VALUES
+('Ivan Ivanov', 28, 'IT', 95000.00),
+('Maria Petrova', 32, 'HR', 65000.00),
+('Alexey Sidorov', 45, 'IT', 120000.00),
+('Elena Kozlova', 23, 'Sales', 55000.00),
+('Dmitry Smirnov', 38, 'IT', 105000.00),
+('Olga Vasilieva', 29, 'Sales', 72000.00),
+('Artem Morozov', 41, 'HR', 70000.00),
+('Pavel Novikov', 52, 'Finance', 110000.00),
+('Tatiana Volkova', 27, 'Finance', 82000.00),
+('Andrey Zaytsev', 33, 'Sales', 68000.00),
+('Natalia Belova', 37, 'IT', 115000.00),
+('Denis Karpov', 25, 'Finance', 59000.00);
+
+INSERT INTO Products (name, price, category, stock_quantity) VALUES
+('ASUS Laptop', 52000.00, 'Electronics', 15),
+('Samsung Smartphone', 35000.00, 'Electronics', 22),
+('Sony Headphones', 5500.00, 'Electronics', 8),
+('Office Chair', 12400.00, 'Furniture', 5),
+('Desk', 8900.00, 'Furniture', 3),
+('Table Lamp', 2100.00, 'Furniture', 12),
+('Nike T-Shirt', 2500.00, 'Clothing', 45),
+('Levis Jeans', 6200.00, 'Clothing', 20),
+('Adidas Sneakers', 8700.00, 'Clothing', 0),
+('Bosch Coffee Maker', 7800.00, 'Electronics', 7),
+('Sofa', 35000.00, 'Furniture', 2),
+('Carpet', 5500.00, 'Furniture', 1),
+('Apple Tablet', 45000.00, 'Electronics', 10),
+('"SQL for Beginners" Book', 800.00, 'Books', 50);
+
+INSERT INTO Orders (product_id, quantity, order_date, customer_name) VALUES
+(1, 1, '2023-01-15', 'Romashka LLC'),
+(3, 2, '2023-01-20', 'Petrov IP'),
+(1, 1, '2023-02-01', 'Progress JSC'),
+(5, 2, '2023-02-10', 'Romashka LLC'),
+(8, 3, '2023-02-15', 'Sidorova IP'),
+(3, 1, '2023-03-02', 'Ivanov (Private)'),
+(10, 1, '2023-03-05', 'Uyut Cafe'),
+(2, 2, '2023-03-10', 'Romashka LLC'),
+(14, 10, '2023-03-12', 'City Library #1'),
+(1, 1, '2023-03-15', 'Petrov IP'),
+(7, 5, '2023-03-20', 'Fitness Club "Forma"'),
+(9, 2, '2023-03-22', 'Smirnov IP'),
+(4, 1, '2023-04-01', 'Office Furniture LLC'),
+(6, 3, '2023-04-03', 'Romashka LLC'),
+(13, 2, '2023-04-10', 'Progress JSC');
+
+ALTER TABLE Orders ADD FOREIGN KEY (Product_id) REFERENCES Products (Id);
+
+SELECT * FROM Orders;
+
+/*Должны быть все заказы, добавив к ним название товара, его цену из Products. Должны быть колонки: 
+Order_id, Order_date, Product_name, Price, Quantity */
+
+SELECT Orders.Id AS Order_id, Orders.Order_Date AS Order_date, Products.Name AS Product_name,
+Products.Price AS Price, Orders.Customer_name AS Customer_name, Orders.Quantity AS Quantity
+FROM Orders
+FULL OUTER JOIN Products ON Products.Id = Orders.Product_id
+GROUP BY Order_id, Products.Name, Products.Price;
+
+-- Вывести имя покупателя и количество его заказов
+SELECT SUM(Quantity) AS Count, Customer_name FROM Orders
+GROUP BY Customer_name
+ORDER BY Count;
+
+-- Вывести все товары и количество их заказов.
+SELECT * FROM Products;
+SELECT * FROM Orders;
+
+SELECT Products.Name AS Product_name, Orders.Product_Id AS Order_count FROM Products
+LEFT JOIN Orders ON Orders.Product_id = Products.Id
+GROUP BY Product_name, Orders.Product_Id
+ORDER BY Order_count;
+
+-- Вывести товар и количество его продаж
+
