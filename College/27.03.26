@@ -1,0 +1,47 @@
+-- Сущность "car_models" - справочник моделей автомобилей автопарка.
+CREATE TABLE IF NOT EXISTS Car_models (
+	Model_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, -- Идентификатор модели.
+	Manufacturer TEXT NOT NULL, -- Производитель автомобиля.
+	Model_name TEXT NOT NULL, -- Название модели.
+	Car_class TEXT NOT NULL -- Класс автомобиля.
+);
+
+-- Сущность "pickup_points" - пункты выдачи и возврата автомобилей.
+CREATE TABLE IF NOT EXISTS Pickup_points (
+	Point_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, -- Идентификатор пункта.
+	Address TEXT NOT NULL, -- Адрес пункта выдачи
+	Phone TEXT NOT NULL -- Контактный телефон пункта
+);
+
+-- Сущность "Cars" - автомобили, доступные в автопарке.
+CREATE TABLE IF NOT EXISTS Cars (
+	Car_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, -- Идентификатор автомобиля.
+	License_plate TEXT NOT NULL UNIQUE, -- Гос. регистрационный номер.
+	Vin TEXT NOT NULL UNIQUE, -- VIN-номер автомобиля.
+	Model_id INTEGER NOT NULL, -- Ссылка на модель автомобиля.
+	Point_id INTEGER NOT NULL, -- Ссылка на пункт размещения.
+	Mileage INT NOT NULL, -- Пробег автомобиля.
+
+	FOREIGN KEY (model_id) REFERENCES Car_models (Model_id),
+	FOREIGN KEY (Point_id) REFERENCES Pickup_points (Point_id)
+);
+
+-- Сущность "Employees" - сотрудники организации, учавствующие в обработке операций.
+CREATE TABLE IF NOT EXISTS Employees (
+	Employee_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, -- Идентификатор сотрудника.
+	Full_name TEXT NOT NULL, -- ФИО сотрудника.
+	Position TEXT NOT NULL -- Должность сотудника.
+);
+
+-- Сущность "Maintence_logs" - журнал тех. обслуживания автомобилей.
+CREATE TABLE IF NOT EXISTS Maintence_logs (
+	Maintence_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, -- Идентификатор записи обслуживания.
+	Maintence_date DATE NOT NULL, -- Дата тех. обслуживания.
+	Car_id INT NOT NULL, -- Ссылка на автомобиль.
+	Work_type TEXT NOT NULL, -- Вид выполненной работы.
+	Comment TEXT, -- Примечание к обслуживанию.
+	Employee_id INT NOT NULL, -- Ссылка на ответственного сотрудника.
+
+	FOREIGN KEY (Car_id) REFERENCES Cars (Car_id),
+	FOREIGN KEY (Car_id) REFERENCES Employees (Employee_id)
+);
