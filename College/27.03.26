@@ -43,5 +43,5 @@ CREATE TABLE IF NOT EXISTS Maintence_logs (
 	Employee_id INT NOT NULL, -- Ссылка на ответственного сотрудника.
 
 	FOREIGN KEY (Car_id) REFERENCES Cars (Car_id),
-	FOREIGN KEY (Car_id) REFERENCES Employees (Employee_id)
+	FOREIGN KEY (Employee_id) REFERENCES Employees (Employee_id)
 );
